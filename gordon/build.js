@@ -26,10 +26,10 @@ async function icon(Comp, color, size = 256) {
   const W = 13.333;
 
   pres.defineSlideMaster({ title: 'DARK', background: { color: C.text2 },
-    objects: [{ placeholder: { options: { name: 'title', type: 'title', x: 0.8, y: 2.2, w: 11.7, h: 1.6, fontSize: 44, bold: true, color: C.background1, valign: 'bottom' }, text: '' } },
-              { placeholder: { options: { name: 'body', type: 'body', x: 0.8, y: 4.0, w: 11.7, h: 1.2, fontSize: 20, color: C.accent6, valign: 'top' }, text: '' } }] });
+    objects: [{ placeholder: { options: { name: 'title', type: 'title', x: 0.8, y: 2.2, w: 11.7, h: 1.6, fontSize: 44, bold: true, color: C.background1, valign: 'bottom', align: 'left' }, text: '' } },
+              { placeholder: { options: { name: 'body', type: 'body', x: 0.8, y: 4.0, w: 11.7, h: 1.2, fontSize: 20, color: C.accent6, valign: 'top', align: 'left' }, text: '' } }] });
   pres.defineSlideMaster({ title: 'CONTENT', background: { color: C.background1 },
-    objects: [{ placeholder: { options: { name: 'title', type: 'title', x: 0.6, y: 0.4, w: 12.1, h: 0.9, fontSize: 32, bold: true, color: C.text2, valign: 'middle' }, text: '' } },
+    objects: [{ placeholder: { options: { name: 'title', type: 'title', x: 0.6, y: 0.4, w: 12.1, h: 0.9, fontSize: 32, bold: true, color: C.text2, valign: 'middle', align: 'left' }, text: '' } },
               { text: { text: 'Gordon NSW 2072 · 부동산 리서치', options: { x: 0.6, y: 7.0, w: 6, h: 0.3, fontSize: 10, color: C.accent3 } } }],
     slideNumber: { x: 12.2, y: 7.0, w: 0.6, h: 0.3, fontSize: 10, color: C.accent3, align: 'right' } });
 
@@ -59,13 +59,13 @@ async function icon(Comp, color, size = 256) {
   s.addText('핵심 요약: 희소성이 만든 프리미엄, 이제 고밀도 전환기', { placeholder: 'title' });
   const sum = [
     ['train', '입지', '1890년 노스쇼어 철도 개통 이후 형성된 기차역 중심 주거지. Pacific Hwy와 T1 노선이 교차하는 교통 거점'],
-    ['home', '부촌 형성', '대형 필지 · 정원형 주택 · 우수 학군 · 숲. 100년 넘게 저밀도가 유지되며 공급이 묶여 희소가치 형성'],
+    ['home', '부촌 형성', '대형 필지 정원주택, 명문 학군, 숲. 100년 넘게 저밀도가 유지되며 희소가치 형성'],
     ['landmark', '카운슬 관계', 'Ku-ring-gai Council 청사가 고든에 위치. 문화유산 보존·수목 정책으로 동네 성격을 지켜옴'],
-    ['city', '향후 계획', '2025년 11월 확정된 카운슬 대안 TOD: 4개 역세권 약 2.47만 세대 수용, 고든 핵심부지 최고 28층'] ];
-  sum.forEach((r, i) => { const x = 0.6 + i * 3.08; card(s, x, 1.6, 2.85, 4.4);
-    iconCircle(s, r[0], x + 0.3, 1.9);
-    T(s, r[1], { x: x + 0.3, y: 2.85, w: 2.3, h: 0.5, fontSize: 20, bold: true, color: C.text2 });
-    T(s, r[2], { x: x + 0.3, y: 3.5, w: 2.3, h: 2.8, fontSize: 14 }); });
+    ['city', '향후 계획', '2025.11 확정된 카운슬 대안안. 고든에 9,012세대 배분, 핵심부지 최고 28층'] ];
+  sum.forEach((r, i) => { const x = 0.6 + i * 3.08; card(s, x, 1.7, 2.85, 4.3);
+    iconCircle(s, r[0], x + 0.3, 2.0);
+    T(s, r[1], { x: x + 0.3, y: 2.95, w: 2.3, h: 0.5, fontSize: 20, bold: true, color: C.text2 });
+    T(s, r[2], { x: x + 0.3, y: 3.6, w: 2.3, h: 2.2, fontSize: 16 }); });
 
   // 3. At a glance - stats
   s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: '개요' });
@@ -99,24 +99,24 @@ async function icon(Comp, color, size = 256) {
     ['home', '주택 품질', '페더레이션·전간기 양식의 대형 필지 단독주택. 상당수가 문화유산 보존구역(HCA)'],
     ['shop', '생활 인프라', 'Gordon Centre 쇼핑센터·식당가, 카운슬 도서관·행정시설이 역 주변에 집중'] ];
   pillars.forEach((r, i) => { const y = 1.55 + i * 1.05; iconCircle(s, r[0], 0.7, y, 0.75);
-    T(s, r[1], { x: 1.75, y: y + 0.12, w: 2.0, h: 0.5, fontSize: 20, bold: true, color: C.text2 });
-    T(s, r[2], { x: 3.8, y: y + 0.08, w: 8.9, h: 0.75, fontSize: 15, valign: 'middle' }); });
+    T(s, r[1], { x: 1.75, y, w: 2.0, h: 0.75, fontSize: 20, bold: true, color: C.text2, valign: 'middle' });
+    T(s, r[2], { x: 3.8, y, w: 8.9, h: 0.75, fontSize: 16, valign: 'middle' }); });
 
   // 5. History timeline
   pres.addSection({ title: '부촌의 형성' });
   s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: '부촌의 형성' });
   s.addText('철도가 만든 부촌: 1879년부터 오늘까지', { placeholder: 'title' });
-  const tl = [['1879', '우체국 이름을 Gordondale 영지에서 따 "Gordon"으로 명명'],
-              ['1890', 'Hornsby–St Leonards 노스쇼어 철도 개통, 고든역 개업 → 주거지 개발 본격화'],
-              ['1906', 'Ku-ring-gai Shire 설립. 첫 회의를 고든 St John\'s 교회 홀에서 개최'],
-              ['1927–28', '노선 전철화, Municipality 승격과 함께 고든 청사 개관'],
-              ['20세기', '대형 필지·정원형 주택의 전문직 주거지로 정착, 저밀도 유지'],
-              ['2024–25', 'NSW 정부 TOD 정책으로 역세권 고밀도화 논쟁 → 카운슬 대안안 확정']];
-  s.addShape(pres.shapes.LINE, { x: 0.9, y: 3.35, w: 11.5, h: 0, line: { color: C.accent6, width: 2 } });
+  const tl = [['1879', 'Gordondale 영지 이름을 따 우체국을 "Gordon"으로 명명'],
+              ['1890', '노스쇼어 철도와 고든역 개통 → 주거지 개발 본격화'],
+              ['1906', 'Ku-ring-gai Shire 설립, 첫 회의를 고든에서 개최'],
+              ['1927–28', '노선 전철화, 시(Municipality) 승격과 고든 청사 개관'],
+              ['20세기', '대형 필지 정원주택의 전문직 주거지로 정착'],
+              ['2024–25', '역세권 고밀화(TOD) 논쟁 → 카운슬 대안안 확정']];
+  s.addShape(pres.shapes.LINE, { x: 0.9, y: 3.65, w: 11.5, h: 0, line: { color: C.accent6, width: 2 } });
   tl.forEach((r, i) => { const x = 0.6 + i * 2.05;
-    s.addShape(pres.shapes.OVAL, { x: x + 0.15, y: 3.15, w: 0.4, h: 0.4, fill: { color: i === 5 ? C.accent2 : C.accent1 }, line: { color: C.background1, width: 2 } });
-    T(s, r[0], { x, y: 2.3, w: 1.9, h: 0.6, fontSize: 22, bold: true, color: i === 5 ? C.accent2 : C.text2 });
-    T(s, r[1], { x, y: 3.85, w: 1.85, h: 2.6, fontSize: 13 }); });
+    s.addShape(pres.shapes.OVAL, { x: x + 0.15, y: 3.45, w: 0.4, h: 0.4, fill: { color: i === 5 ? C.accent2 : C.accent1 }, line: { color: C.background1, width: 2 } });
+    T(s, r[0], { x, y: 2.6, w: 1.9, h: 0.6, fontSize: 22, bold: true, color: i === 5 ? C.accent2 : C.text2 });
+    T(s, r[1], { x, y: 4.15, w: 1.9, h: 2.4, fontSize: 15 }); });
 
   // 6. Why wealthy mechanism
   s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: '부촌의 형성' });
@@ -126,13 +126,13 @@ async function icon(Comp, color, size = 256) {
                 ['보존 정책', '카운슬이 문화유산 보존구역·수목 보호·저밀도 조닝을 오래 유지'],
                 ['희소성 프리미엄', '수요는 꾸준한데 신규 공급은 묶임 → 단독주택 가격 상승 누적']];
   flow.forEach((r, i) => { const x = 0.6 + i * 3.15;
-    card(s, x, 1.8, 2.75, 3.6, i === 3 ? C.text2 : C.background2);
-    T(s, String(i + 1).padStart(2, '0'), { x: x + 0.3, y: 2.05, w: 1, h: 0.6, fontSize: 28, bold: true, color: C.accent2 });
-    T(s, r[0], { x: x + 0.3, y: 2.75, w: 2.2, h: 0.5, fontSize: 19, bold: true, color: i === 3 ? C.background1 : C.text2 });
-    T(s, r[1], { x: x + 0.3, y: 3.35, w: 2.2, h: 1.9, fontSize: 14, color: i === 3 ? C.background1 : C.text1 });
-    if (i < 3) s.addShape(pres.shapes.CHEVRON, { x: x + 2.84, y: 3.45, w: 0.25, h: 0.3, fill: { color: C.accent3 }, line: { type: 'none' } });
+    card(s, x, 1.7, 2.75, 3.4, i === 3 ? C.text2 : C.background2);
+    T(s, String(i + 1).padStart(2, '0'), { x: x + 0.3, y: 1.95, w: 1, h: 0.6, fontSize: 28, bold: true, color: C.accent2 });
+    T(s, r[0], { x: x + 0.3, y: 2.65, w: 2.2, h: 0.5, fontSize: 19, bold: true, color: i === 3 ? C.background1 : C.text2 });
+    T(s, r[1], { x: x + 0.3, y: 3.25, w: 2.2, h: 1.7, fontSize: 15, color: i === 3 ? C.background1 : C.text1 });
+    if (i < 3) s.addShape(pres.shapes.CHEVRON, { x: x + 2.84, y: 3.25, w: 0.25, h: 0.3, fill: { color: C.accent3 }, line: { type: 'none' } });
   });
-  T(s, '결과: 고든은 2026년에도 단독주택 중위가격이 유닛의 약 4배인 "땅값 중심" 시장', { x: 0.6, y: 5.8, w: 12.1, h: 0.6, fontSize: 18, bold: true, color: C.text2 });
+  T(s, '결과: 고든은 2026년에도 단독주택 중위가격이 유닛의 약 4배인 "땅값 중심" 시장', { x: 0.6, y: 5.5, w: 12.1, h: 0.6, fontSize: 20, bold: true, color: C.text2 });
 
   // 7. Council relationship
   pres.addSection({ title: 'Ku-ring-gai Council' });
@@ -145,7 +145,7 @@ async function icon(Comp, color, size = 256) {
   rel.forEach((r, i) => { const x = 0.6 + (i % 2) * 6.15, y = 1.6 + Math.floor(i / 2) * 2.55;
     card(s, x, y, 5.95, 2.35); iconCircle(s, r[0], x + 0.3, y + 0.3);
     T(s, r[1], { x: x + 1.25, y: y + 0.4, w: 4.4, h: 0.5, fontSize: 19, bold: true, color: C.text2 });
-    T(s, r[2], { x: x + 1.25, y: y + 0.95, w: 4.4, h: 1.3, fontSize: 14 }); });
+    T(s, r[2], { x: x + 1.25, y: y + 0.95, w: 4.4, h: 1.3, fontSize: 15 }); });
 
   // 8. Policy conflict timeline
   s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: 'Ku-ring-gai Council' });
@@ -159,25 +159,26 @@ async function icon(Comp, color, size = 256) {
     s.addShape(pres.shapes.ROUNDED_RECTANGLE, { x: 0.6, y, w: 1.5, h: 0.85, rectRadius: 0.1, fill: { color: i === 4 ? C.accent2 : C.accent1 }, line: { type: 'none' } });
     T(s, r[0], { x: 0.6, y, w: 1.5, h: 0.85, fontSize: 16, bold: true, color: C.background1, align: 'center', valign: 'middle' });
     T(s, r[1], { x: 2.35, y: y + 0.05, w: 2.9, h: 0.75, fontSize: 17, bold: true, color: C.text2, valign: 'middle' });
-    T(s, r[2], { x: 5.3, y: y + 0.05, w: 7.4, h: 0.75, fontSize: 14, valign: 'middle' }); });
+    T(s, r[2], { x: 5.3, y: y + 0.05, w: 7.4, h: 0.75, fontSize: 15, valign: 'middle' }); });
 
   // 9. Future plan numbers + chart
   pres.addSection({ title: '향후 개발' });
   s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: '향후 개발' });
-  s.addText('확정 대안안: 기존 TOD 대비 약 3,300세대 추가', { placeholder: 'title' });
-  s.addChart(pres.charts.BAR, [{ name: '주택 수용력', labels: ['NSW 기존 TOD', '카운슬 대안안(확정)'], values: [21430, 24728] }], {
-    x: 0.6, y: 1.5, w: 6.4, h: 5.1, barDir: 'col', chartColors: [HEX.accent1],
-    showTitle: true, title: '고든~로즈빌 4개 역세권 주택 수용력(세대)', titleFontSize: 14, titleColor: HEX.dk2, titleFontFace: '+mn-lt',
+  s.addText('고든 배분 9,012세대: 4개 역세권 중 2위 규모', { placeholder: 'title' });
+  s.addChart(pres.charts.BAR, [{ name: '배분 세대 수', labels: ['린드필드', '고든', '로즈빌', '킬라라'], values: [9419, 9012, 3353, 2778] }], {
+    x: 0.6, y: 1.5, w: 6.6, h: 4.9, barDir: 'bar', chartColors: [HEX.accent1], barGapWidthPct: 60,
+    showTitle: true, title: '카운슬 대안안 역세권별 세대 수(20년, 총 24,562)', titleFontSize: 14, titleColor: HEX.dk2, titleFontFace: '+mn-lt',
     showValue: true, dataLabelPosition: 'outEnd', dataLabelFormatCode: '#,##0', dataLabelFontSize: 14, dataLabelColor: HEX.dk1, dataLabelFontFace: '+mn-lt',
-    catAxisLabelColor: HEX.dk1, catAxisLabelFontSize: 13, catAxisLabelFontFace: '+mn-lt', valAxisHidden: true,
-    valGridLine: { style: 'none' }, catGridLine: { style: 'none' }, showLegend: false, valAxisMinVal: 0, valAxisMaxVal: 28000 });
-  const facts = [['28층', '고든 핵심부지(Key site) 최고 높이. 그 외 중심부 6~24층'],
-                 ['800m', '개발 범위를 역 반경 800m로 넓히되 보존구역은 최대한 회피'],
-                 ['약 9,000', '고든 배분 세대 수(카운슬 FAQ, 4개 센터 중 최대)'],
-                 ['7,600', '2029년까지 Ku-ring-gai가 공급해야 할 주택 목표(국가 주택 협약)']];
-  facts.forEach((r, i) => { const y = 1.5 + i * 1.3;
-    T(s, r[0], { x: 7.5, y, w: 2.1, h: 1.0, fontSize: 26, bold: true, color: C.accent2, valign: 'middle' });
-    T(s, r[1], { x: 9.7, y, w: 3.0, h: 1.0, fontSize: 14, valign: 'middle' }); });
+    catAxisLabelColor: HEX.dk1, catAxisLabelFontSize: 14, catAxisLabelFontFace: '+mn-lt', catAxisOrientation: 'maxMin', valAxisHidden: true,
+    valGridLine: { style: 'none' }, catGridLine: { style: 'none' }, showLegend: false, valAxisMinVal: 0, valAxisMaxVal: 11500 });
+  T(s, '출처: Ku-ring-gai Council, TOD Alternative Preferred Scenario FAQ(2025) — SJB 컨설턴트 추정치, 주정부(DPHI) 검증 전 수치', { x: 0.6, y: 6.45, w: 6.6, h: 0.45, fontSize: 10, color: C.accent3, italic: true });
+  const facts = [['28층', '고든 핵심부지(Gordon Centre) 최고 높이, 4개 역세권 3~28층'],
+                 ['800m', '역 반경 800m까지 개발, 보존구역(HCA) 80% 보호'],
+                 ['24,728', '2025.11 주정부 확정안 전체 수용력(기존 TOD 21,430 대비 +약 3,300)'],
+                 ['7,600', '2029년까지 Ku-ring-gai 주택 공급 목표(국가 주택 협약)']];
+  facts.forEach((r, i) => { const y = 1.5 + i * 1.25;
+    T(s, r[0], { x: 7.6, y, w: 1.7, h: 1.0, fontSize: 26, bold: true, color: C.accent2, valign: 'middle' });
+    T(s, r[1], { x: 9.35, y, w: 3.4, h: 1.0, fontSize: 14, valign: 'middle' }); });
 
   // 10. Projects
   s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: '향후 개발' });
@@ -199,14 +200,14 @@ async function icon(Comp, color, size = 256) {
   s.addText('투자 관점 시사점: 기회와 리스크', { placeholder: 'title' });
   const cols = [['up', '기회', C.accent1, ['역세권 고밀도 조닝으로 부지 통합(amalgamation) 수요 → 대상 필지 토지가치 상승 여지', '신축 아파트 공급으로 다운사이저·젊은 가구 유입, 상권 활성화', '시빅 허브·도서관 등 공공시설 투자로 생활 편의 개선']],
                 ['warn', '리스크', C.accent4, ['유닛 공급 급증 시 아파트 가격·임대료 상승 제한 가능', '최근 12개월 단독주택 가격 보합(+0.1%) — 단기 모멘텀 약함', '교통·학교·주차 등 인프라 부담과 동네 성격 변화 논쟁 지속']]];
-  cols.forEach((c, i) => { const x = 0.6 + i * 6.15; card(s, x, 1.55, 5.95, 5.0);
+  cols.forEach((c, i) => { const x = 0.6 + i * 6.15; card(s, x, 1.55, 5.95, 4.6);
     iconCircle(s, c[0], x + 0.3, 1.85, 0.7, c[2]);
     T(s, c[1], { x: x + 1.2, y: 1.95, w: 3, h: 0.5, fontSize: 22, bold: true, color: c[2] });
-    T(s, c[3].map((t, j) => ({ text: t, options: { bullet: true, breakLine: j < 2 } })), { x: x + 0.35, y: 2.85, w: 5.3, h: 3.5, fontSize: 15, paraSpaceAfter: 12 }); });
+    T(s, c[3].map((t, j) => ({ text: t, options: { bullet: true, breakLine: j < 2 } })), { x: x + 0.35, y: 2.85, w: 5.3, h: 3.1, fontSize: 17, paraSpaceAfter: 14 }); });
 
   // 12. Closing
   s = pres.addSlide({ masterName: 'DARK', sectionTitle: '시사점' });
-  s.addText('결론: 저밀도 부촌에서 "역세권 복합 중심지"로', { placeholder: 'title' });
+  s.addText('결론: 저밀도 부촌에서 역세권 중심지로', { placeholder: 'title' });
   s.addText('철도·학군·숲·보존 정책이 만든 희소가치는 여전하며, 2025년 확정된 카운슬 대안안으로 역 주변은 최고 28층의 고밀 중심지로 재편될 예정. 단독주택(특히 보존구역)은 희소성 유지, 역세권 필지는 개발 프리미엄, 아파트는 공급 증가 영향을 주시할 필요.', { placeholder: 'body', fontSize: 18 });
 
   // 13. Sources
@@ -225,4 +226,5 @@ async function icon(Comp, color, size = 256) {
 
   await pres.writeFile({ fileName: 'Gordon_부동산_분석.pptx' });
   await applyTheme('Gordon_부동산_분석.pptx', THEME);
+  require('child_process').execFileSync('python3', [__dirname + '/fix_fonts.py', 'Gordon_부동산_분석.pptx']);
 })();
