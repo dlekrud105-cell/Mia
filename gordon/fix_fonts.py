@@ -10,6 +10,8 @@ def fix_rpr(el):
     for tag in ("latin","ea","cs"):
         for old in el.findall(f"{{{A}}}{tag}"): el.remove(old)
         new = etree.Element(f"{{{A}}}{tag}"); new.set("typeface", FONT)
+        # sans-serif hints: a viewer without Malgun Gothic falls back to a sans font, not Times
+        new.set("panose", "020B0503020000020004"); new.set("pitchFamily", "34"); new.set("charset", "-127")
         idx = ORDER.index(tag); pos = 0
         for i, ch in enumerate(el):
             name = etree.QName(ch).localname
@@ -28,7 +30,7 @@ for item in zin.infolist():
         root = etree.fromstring(data)
         for fnt in root.iter(f"{{{A}}}majorFont", f"{{{A}}}minorFont"):
             for tag in ("latin","ea"):
-                e = fnt.find(f"{{{A}}}{tag}"); e.set("typeface", FONT)
+                e = fnt.find(f"{{{A}}}{tag}"); e.set("typeface", FONT); e.set("panose", "020B0503020000020004")
             for f in fnt.findall(f"{{{A}}}font"):
                 if f.get("script") == "Hang": f.set("typeface", "맑은 고딕")
         data = etree.tostring(root, xml_declaration=True, encoding="UTF-8", standalone=True)

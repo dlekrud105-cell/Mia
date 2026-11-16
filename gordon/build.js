@@ -22,7 +22,9 @@ async function icon(Comp, color, size = 256) {
   pres.layout = 'LAYOUT_WIDE'; // 13.33 x 7.5
   pres.theme = { headFontFace: THEME.headFontFace, bodyFontFace: THEME.bodyFontFace };
   pres.title = 'Gordon NSW 부동산 분석';
-  const C = pres.SchemeColor;
+  // Plain hex colours (not scheme references) so every viewer — Keynote, iOS preview, Google Slides — renders them the same.
+  const C = { text1: HEX.dk1, text2: HEX.dk2, background1: HEX.lt1, background2: HEX.lt2,
+    accent1: HEX.accent1, accent2: HEX.accent2, accent3: HEX.accent3, accent4: HEX.accent4, accent5: HEX.accent5, accent6: HEX.accent6 };
   const W = 13.333;
 
   pres.defineSlideMaster({ title: 'DARK', background: { color: C.text2 },
@@ -77,7 +79,7 @@ async function icon(Comp, color, size = 256) {
   stats.forEach((r, i) => { const x = 0.6 + (i % 2) * 3.6, y = 1.6 + Math.floor(i / 2) * 2.55;
     card(s, x, y, 3.4, 2.35);
     T(s, r[0], { x: x + 0.25, y: y + 0.25, w: 3.0, h: 0.9, fontSize: 32, bold: true, color: i === 3 ? C.accent2 : C.text2 });
-    T(s, r[1], { x: x + 0.25, y: y + 1.2, w: 3.0, h: 1.0, fontSize: 12, color: C.text1 }); });
+    T(s, r[1], { x: x + 0.25, y: y + 1.15, w: 3.0, h: 1.05, fontSize: 13, color: C.text1 }); });
   card(s, 8.0, 1.6, 4.7, 4.9, C.text2);
   T(s, '위치 개요', { x: 8.35, y: 1.9, w: 4.0, h: 0.5, fontSize: 20, bold: true, color: C.background1 });
   T(s, [
@@ -166,11 +168,12 @@ async function icon(Comp, color, size = 256) {
   s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: '향후 개발' });
   s.addText('고든 배분 9,012세대: 4개 역세권 중 2위 규모', { placeholder: 'title' });
   s.addChart(pres.charts.BAR, [{ name: '배분 세대 수', labels: ['린드필드', '고든', '로즈빌', '킬라라'], values: [9419, 9012, 3353, 2778] }], {
-    x: 0.6, y: 1.5, w: 6.6, h: 4.9, barDir: 'bar', chartColors: [HEX.accent1], barGapWidthPct: 60,
-    showTitle: true, title: '카운슬 대안안 역세권별 세대 수(20년, 총 24,562)', titleFontSize: 14, titleColor: HEX.dk2, titleFontFace: '+mn-lt',
+    x: 0.6, y: 2.0, w: 6.6, h: 4.4, barDir: 'bar', chartColors: [HEX.accent1], barGapWidthPct: 60,
+    showTitle: false,
     showValue: true, dataLabelPosition: 'outEnd', dataLabelFormatCode: '#,##0', dataLabelFontSize: 14, dataLabelColor: HEX.dk1, dataLabelFontFace: '+mn-lt',
     catAxisLabelColor: HEX.dk1, catAxisLabelFontSize: 14, catAxisLabelFontFace: '+mn-lt', catAxisOrientation: 'maxMin', valAxisHidden: true,
     valGridLine: { style: 'none' }, catGridLine: { style: 'none' }, showLegend: false, valAxisMinVal: 0, valAxisMaxVal: 11500 });
+  T(s, '카운슬 대안안 역세권별 세대 수 (20년간, 총 24,562세대)', { x: 0.6, y: 1.5, w: 6.6, h: 0.4, fontSize: 15, bold: true, color: C.text2 });
   T(s, '출처: Ku-ring-gai Council, TOD Alternative Preferred Scenario FAQ(2025) — SJB 컨설턴트 추정치, 주정부(DPHI) 검증 전 수치', { x: 0.6, y: 6.45, w: 6.6, h: 0.45, fontSize: 10, color: C.accent3, italic: true });
   const facts = [['28층', '고든 핵심부지(Gordon Centre) 최고 높이, 4개 역세권 3~28층'],
                  ['800m', '역 반경 800m까지 개발, 보존구역(HCA) 80% 보호'],
@@ -227,4 +230,5 @@ async function icon(Comp, color, size = 256) {
   await pres.writeFile({ fileName: 'Gordon_부동산_분석.pptx' });
   await applyTheme('Gordon_부동산_분석.pptx', THEME);
   require('child_process').execFileSync('python3', [__dirname + '/fix_fonts.py', 'Gordon_부동산_분석.pptx']);
+  require('child_process').execFileSync('python3', [__dirname + '/export_pdf.py', 'Gordon_부동산_분석.pptx', 'Gordon_부동산_분석.pdf'], { stdio: 'inherit' });
 })();
