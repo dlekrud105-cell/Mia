@@ -74,7 +74,7 @@ async function icon(Comp, color, size = 256) {
   s.addText('한눈에 보는 고든: 단독주택 중위 $3.4–3.8M', { placeholder: 'title' });
   const stats = [['$3.4–3.8M', '단독주택 중위가격\n(OnTheHouse · Microburbs · AusPropertyInsights, 2026)'],
                  ['~$0.95M', '유닛(아파트) 중위가격\n단독주택의 약 1/4 수준'],
-                 ['$1,500/주', '단독주택 중위 임대료\n(OnTheHouse)'],
+                 ['$1,400/주', '단독주택 중위 임대료\n(NSW 공식 통계, 2026년 2분기)'],
                  ['+0.1%', '최근 12개월 주택가격 변동\n(Microburbs, 70건 거래 기준)']];
   stats.forEach((r, i) => { const x = 0.6 + (i % 2) * 3.6, y = 1.6 + Math.floor(i / 2) * 2.55;
     card(s, x, y, 3.4, 2.35);
@@ -89,6 +89,75 @@ async function icon(Comp, color, size = 256) {
     { text: '카운슬 청사·최대 도서관이 있는 행정 중심', options: { bullet: true } } ],
     { x: 8.35, y: 2.6, w: 4.0, h: 3.6, fontSize: 15, color: C.background1, paraSpaceAfter: 10 });
   T(s, '※ 데이터 출처마다 기준일·방법이 달라 범위로 표기', { x: 0.6, y: 6.6, w: 7, h: 0.3, fontSize: 10, color: C.accent3, italic: true });
+
+  // 3b. 10-year comparison — prices
+  pres.addSection({ title: '10년 비교' });
+  s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: '10년 비교' });
+  s.addText('10년간 집값: 단독주택 +75%, 아파트 +36%', { placeholder: 'title' });
+  T(s, 'Ku-ring-gai 카운슬 중위 매매가 (각 연도 1분기)', { x: 0.6, y: 1.5, w: 7.2, h: 0.4, fontSize: 15, bold: true, color: C.text2 });
+  s.addChart(pres.charts.BAR, [
+      { name: '2016', labels: ['단독주택', '아파트'], values: [1.89, 0.863] },
+      { name: '2026', labels: ['단독주택', '아파트'], values: [3.30, 1.17] } ], {
+    x: 0.6, y: 1.95, w: 7.2, h: 4.5, barDir: 'col', barGrouping: 'clustered', barGapWidthPct: 70, chartColors: [HEX.accent6, HEX.accent1],
+    showValue: true, dataLabelPosition: 'outEnd', dataLabelFormatCode: '$0.00"M"', dataLabelFontSize: 14, dataLabelColor: HEX.dk1, dataLabelFontFace: '+mn-lt',
+    catAxisLabelColor: HEX.dk1, catAxisLabelFontSize: 15, catAxisLabelFontFace: '+mn-lt', valAxisHidden: true, valAxisMinVal: 0, valAxisMaxVal: 3.9,
+    valGridLine: { style: 'none' }, catGridLine: { style: 'none' },
+    showLegend: true, legendPos: 't', legendFontSize: 14, legendColor: HEX.dk1, legendFontFace: '+mn-lt' });
+  const pc = [['단독주택', '+75%', '연평균 +5.7%', '$1.89M → $3.30M'],
+              ['아파트(유닛)', '+36%', '연평균 +3.1%', '$0.86M → $1.17M']];
+  pc.forEach((r, i) => { const y = 1.5 + i * 1.75; card(s, 8.2, y, 4.5, 1.55, i === 0 ? C.text2 : C.background2);
+    const fg = i === 0 ? C.background1 : C.text2;
+    T(s, r[0], { x: 8.45, y: y + 0.2, w: 2.0, h: 0.4, fontSize: 16, bold: true, color: fg });
+    T(s, r[1], { x: 8.45, y: y + 0.6, w: 2.0, h: 0.75, fontSize: 34, bold: true, color: C.accent2 });
+    T(s, r[2] + '\n' + r[3], { x: 10.5, y: y + 0.3, w: 2.1, h: 1.0, fontSize: 14, color: fg, valign: 'middle' }); });
+  card(s, 8.2, 5.0, 4.5, 1.45);
+  T(s, '고든(2072) 2026년 1분기', { x: 8.45, y: 5.12, w: 4.0, h: 0.35, fontSize: 14, bold: true, color: C.text2 });
+  T(s, '단독주택 $3.38M · 아파트 $0.94M\n카운슬 전체와 비슷한 수준', { x: 8.45, y: 5.5, w: 4.0, h: 0.8, fontSize: 14 });
+  T(s, '출처: NSW DCJ Rent and Sales Report — 2016년 1분기, 2026년 1분기 매매 (단독주택=Non-strata, 아파트=Strata). 고든 단독 수치는 2016년 공식 통계 없음', { x: 0.6, y: 6.5, w: 12.1, h: 0.35, fontSize: 10, color: C.accent3, italic: true });
+
+  // 3c. 10-year comparison — rents
+  s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: '10년 비교' });
+  s.addText('10년간 렌트비: 주택·아파트 모두 약 35~38% 상승', { placeholder: 'title' });
+  T(s, 'Ku-ring-gai 카운슬 중위 주간 임대료 (주택 3베드·아파트 2베드, 각 연도 2분기)', { x: 0.6, y: 1.5, w: 7.2, h: 0.4, fontSize: 15, bold: true, color: C.text2 });
+  s.addChart(pres.charts.BAR, [
+      { name: '2016', labels: ['단독주택', '아파트'], values: [800, 630] },
+      { name: '2026', labels: ['단독주택', '아파트'], values: [1100, 850] } ], {
+    x: 0.6, y: 1.95, w: 7.2, h: 4.5, barDir: 'col', barGrouping: 'clustered', barGapWidthPct: 70, chartColors: [HEX.accent6, HEX.accent1],
+    showValue: true, dataLabelPosition: 'outEnd', dataLabelFormatCode: '$#,##0', dataLabelFontSize: 14, dataLabelColor: HEX.dk1, dataLabelFontFace: '+mn-lt',
+    catAxisLabelColor: HEX.dk1, catAxisLabelFontSize: 15, catAxisLabelFontFace: '+mn-lt', valAxisHidden: true, valAxisMinVal: 0, valAxisMaxVal: 1300,
+    valGridLine: { style: 'none' }, catGridLine: { style: 'none' },
+    showLegend: true, legendPos: 't', legendFontSize: 14, legendColor: HEX.dk1, legendFontFace: '+mn-lt' });
+  const rc = [['단독주택 3베드', '+38%', '주 $800 → $1,100', '연 $41.6k → $57.2k'],
+              ['아파트 2베드', '+35%', '주 $630 → $850', '연 $32.8k → $44.2k']];
+  rc.forEach((r, i) => { const y = 1.5 + i * 1.75; card(s, 8.2, y, 4.5, 1.55, i === 0 ? C.text2 : C.background2);
+    const fg = i === 0 ? C.background1 : C.text2;
+    T(s, r[0], { x: 8.45, y: y + 0.2, w: 2.2, h: 0.4, fontSize: 16, bold: true, color: fg });
+    T(s, r[1], { x: 8.45, y: y + 0.6, w: 2.0, h: 0.75, fontSize: 34, bold: true, color: C.accent2 });
+    T(s, r[2] + '\n' + r[3], { x: 10.5, y: y + 0.3, w: 2.1, h: 1.0, fontSize: 14, color: fg, valign: 'middle' }); });
+  card(s, 8.2, 5.0, 4.5, 1.45);
+  T(s, '고든(2072) 2026년 2분기', { x: 8.45, y: 5.12, w: 4.0, h: 0.35, fontSize: 14, bold: true, color: C.text2 });
+  T(s, '단독주택 전체 주 $1,400 (4베드+ $1,550)\n아파트 전체 주 $750 (2베드 $820)', { x: 8.45, y: 5.5, w: 4.0, h: 0.8, fontSize: 14 });
+  T(s, '출처: NSW DCJ Rent and Sales Report — 2016년·2026년 2분기 신규 임대 보증금(bond) 기준 중위 주간 임대료', { x: 0.6, y: 6.5, w: 12.1, h: 0.35, fontSize: 10, color: C.accent3, italic: true });
+
+  // 3d. Purchase cost incl. stamp duty + yield
+  s = pres.addSlide({ masterName: 'CONTENT', sectionTitle: '10년 비교' });
+  s.addText('구매비용: 인지세까지 넣으면 주택 취득비용 약 $148만 증가', { placeholder: 'title' });
+  const H = { bold: true, color: C.background1, fill: { color: C.accent1 }, align: 'center' };
+  const L = (t, o = {}) => ({ text: t, options: Object.assign({ color: C.text1, fill: { color: C.background1 }, align: 'right' }, o) });
+  const Lh = (t) => ({ text: t, options: { bold: true, color: C.text2, fill: { color: C.background2 }, align: 'left' } });
+  const costRows = [
+    [{ text: '항목', options: Object.assign({}, H, { align: 'left' }) }, { text: '단독주택 2016', options: H }, { text: '단독주택 2026', options: H }, { text: '아파트 2016', options: H }, { text: '아파트 2026', options: H }],
+    [Lh('중위 매매가'), L('$1,890,000'), L('$3,300,000'), L('$863,000'), L('$1,170,000')],
+    [Lh('인지세 (Transfer duty)'), L('$89,440'), L('$163,512'), L('$34,325'), L('$47,062')],
+    [Lh('취득 총액'), L('$1,979,440', { bold: true }), L('$3,463,512', { bold: true }), L('$897,325', { bold: true }), L('$1,217,062', { bold: true })],
+    [Lh('10년 증가액'), L(''), L('+$1,484,072 (+75%)', { bold: true, color: C.accent4 }), L(''), L('+$319,737 (+36%)', { bold: true, color: C.accent4 })],
+    [Lh('총수익률 (연 렌트 ÷ 매매가)'), L('2.2%'), L('1.7%'), L('3.8%'), L('3.8%')] ];
+  s.addTable(costRows, { x: 0.6, y: 1.5, w: 12.1, colW: [3.3, 2.2, 2.2, 2.2, 2.2], fontSize: 15, rowH: 0.62, valign: 'middle',
+    border: { type: 'solid', pt: 0.5, color: HEX.accent6 }, margin: [0, 0.15, 0, 0.15] });
+  card(s, 0.6, 5.45, 12.1, 0.95);
+  T(s, '시사점: 주택 가격(+75%)이 렌트(+38%)보다 훨씬 빨리 올라 수익률이 2.2%→1.7%로 하락 — 주택은 "임대수익"보다 "토지가치 상승"에 베팅하는 자산. 아파트는 가격과 렌트가 비슷하게 올라 수익률 유지.',
+    { x: 0.85, y: 5.55, w: 11.6, h: 0.75, fontSize: 14, color: C.text2, valign: 'middle' });
+  T(s, '인지세: Revenue NSW 일반 세율(2016년 기준표 / 2025-26년 기준표)로 계산, 첫 주택 감면·외국인 추가 인지세·대출·법무비 제외. 수익률은 주택 3베드·아파트 2베드 렌트 기준 근사치', { x: 0.6, y: 6.5, w: 12.1, h: 0.35, fontSize: 10, color: C.accent3, italic: true });
 
   // 4. Why strong
   pres.addSection({ title: '왜 뛰어난가' });
@@ -223,7 +292,8 @@ async function icon(Comp, color, size = 256) {
     'NSW Government 보도자료 — "3,300 extra homes unlocked in Ku-ring-gai"',
     'The Urban Developer, Inside Local Government, City Hub, STEP, FOKE — TOD 대안안 보도',
     'NSW Planning Portal — 고든 SSD 프로젝트(810 Pacific Hwy, Uniting Gordon, Rosedale Rd, Burgoyne St, Park Ave)',
-    'Property Council of Australia — 카운슬 대안안 의견서 (2025.5)'];
+    'Property Council of Australia — 카운슬 대안안 의견서 (2025.5)',
+    'NSW DCJ Rent and Sales Report — 2016·2026년 매매·임대 통계 / Revenue NSW 인지세율표'];
   T(s, src.map((t, j) => ({ text: t, options: { bullet: true, breakLine: j < src.length - 1 } })), { x: 0.6, y: 1.5, w: 12.1, h: 4.8, fontSize: 14, paraSpaceAfter: 8 });
   T(s, '본 자료는 공개 정보 기반 리서치이며 투자 자문이 아닙니다. 가격·계획은 수시로 변동되니 최신 자료를 확인하세요.', { x: 0.6, y: 6.35, w: 12.1, h: 0.4, fontSize: 11, italic: true, color: C.accent3 });
 
