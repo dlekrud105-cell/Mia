@@ -1,7 +1,8 @@
 """Post-process: one font (Malgun Gothic) for Latin + Korean, Korean language tag."""
 import sys, zipfile, shutil, re
 from lxml import etree
-FONT = "Malgun Gothic"
+FONT = "Malgun Gothic"   # Korean (ea) font
+LATIN = "Arial"          # Latin font present on Windows, Mac, iPad — never falls back to a serif
 A = "http://schemas.openxmlformats.org/drawingml/2006/main"
 ORDER = ["ln","noFill","solidFill","gradFill","blipFill","pattFill","grpFill","effectLst","effectDag","highlight",
          "uLnTx","uLn","uFillTx","uFill","latin","ea","cs","sym","hlinkClick","hlinkMouseOver","rtl","extLst"]
@@ -9,9 +10,11 @@ def fix_rpr(el):
     el.set("lang", "ko-KR"); el.set("altLang", "en-US")
     for tag in ("latin","ea","cs"):
         for old in el.findall(f"{{{A}}}{tag}"): el.remove(old)
-        new = etree.Element(f"{{{A}}}{tag}"); new.set("typeface", FONT)
-        # sans-serif hints: a viewer without Malgun Gothic falls back to a sans font, not Times
-        new.set("panose", "020B0503020000020004"); new.set("pitchFamily", "34"); new.set("charset", "-127")
+        new = etree.Element(f"{{{A}}}{tag}")
+        if tag == "latin":
+            new.set("typeface", LATIN); new.set("panose", "020B0604020202020204"); new.set("pitchFamily", "34"); new.set("charset", "0")
+        else:
+            new.set("typeface", FONT); new.set("panose", "020B0503020000020004"); new.set("pitchFamily", "34"); new.set("charset", "-127")
         idx = ORDER.index(tag); pos = 0
         for i, ch in enumerate(el):
             name = etree.QName(ch).localname
@@ -25,12 +28,21 @@ for item in zin.infolist():
     if n.endswith(".xml") and (n.startswith("ppt/slides/slide") or n.startswith("ppt/slideLayouts/") or n.startswith("ppt/slideMasters/") or n.startswith("ppt/charts/chart")):
         root = etree.fromstring(data)
         for el in root.iter(f"{{{A}}}rPr", f"{{{A}}}defRPr", f"{{{A}}}endParaRPr"): fix_rpr(el)
+        m = re.match(r"ppt/slides/slide(\d+)\.xml$", n)
+        if m:
+            # pptxgenjs gives every slide the same ids/names ("Shape 1", id 3 ...). Some viewers
+            # (iOS/macOS preview) then draw one slide's shapes on another — make them unique.
+            sn = int(m.group(1)); k = 0
+            for c in root.iter("{http://schemas.openxmlformats.org/presentationml/2006/main}cNvPr"):
+                k += 1
+                c.set("id", str(sn * 1000 + k))
+                if c.get("name"): c.set("name", f"S{sn} {c.get('name')}")
         data = etree.tostring(root, xml_declaration=True, encoding="UTF-8", standalone=True)
     elif n.startswith("ppt/theme/theme"):
         root = etree.fromstring(data)
         for fnt in root.iter(f"{{{A}}}majorFont", f"{{{A}}}minorFont"):
-            for tag in ("latin","ea"):
-                e = fnt.find(f"{{{A}}}{tag}"); e.set("typeface", FONT); e.set("panose", "020B0503020000020004")
+            e = fnt.find(f"{{{A}}}latin"); e.set("typeface", LATIN); e.set("panose", "020B0604020202020204")
+            e = fnt.find(f"{{{A}}}ea"); e.set("typeface", FONT); e.set("panose", "020B0503020000020004")
             for f in fnt.findall(f"{{{A}}}font"):
                 if f.get("script") == "Hang": f.set("typeface", "맑은 고딕")
         data = etree.tostring(root, xml_declaration=True, encoding="UTF-8", standalone=True)
